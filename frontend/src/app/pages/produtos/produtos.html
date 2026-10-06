@@ -10,19 +10,35 @@
     </button>
   </header>
 
-@for (produto of produtos; track produto.sku) {
-  <div class="produto">
-    <h2>{{ produto.nome }}</h2>
-    <p>SKU: {{ produto.sku }}</p>
-    <p>Categoria: {{ produto.categoria }}</p>
-    <p>Estoque atual: {{ produto.estoque }}</p>
-    <p>Estoque mínimo: {{ produto.estoqueMinimo }}</p>
-    @if (produto.estoque < produto.estoqueMinimo) {
-    <p>Estoque baixo</p>
-    } @else {
-    <p>Estoque adequado</p>
-    }
-  </div>
-}
+  <table>
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>SKU</th>
+        <th>Categoria</th>
+        <th>Estoque</th>
+        <th>Mínimo</th>
+        <th>Status</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      @for (produto of produtos; track produto.sku) {
+        <tr>
+          <td>{{ produto.nome }}</td>
+          <td>{{ produto.sku }}</td>
+          <td>{{ produto.categoria }}</td>
+          <td>{{ produto.estoque }}</td>
+          <td>{{ produto.estoqueMinimo }}</td>
+          <td>
+            @if (produto.estoque < produto.estoqueMinimo) {
+              Estoque baixo
+            } @else {
+              Estoque adequado
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </section>
