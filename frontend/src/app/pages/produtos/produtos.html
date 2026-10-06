@@ -31,12 +31,12 @@
           <td>{{ produto.estoque }}</td>
           <td>{{ produto.estoqueMinimo }}</td>
           <td>
-            @if (produto.estoque < produto.estoqueMinimo) {
-              Estoque baixo
-            } @else {
-              Estoque adequado
-            }
-          </td>
+  @if (produto.estoque < produto.estoqueMinimo) {
+    <span class="status status-baixo">Estoque baixo</span>
+  } @else {
+    <span class="status status-adequado">Estoque adequado</span>
+  }
+</td>
         </tr>
       }
     </tbody>
