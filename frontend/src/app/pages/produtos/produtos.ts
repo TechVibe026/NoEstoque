@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+interface Produto {
+  nome: string;
+  sku: string;
+  estoque: number;
+  estoqueMinimo: number;
+}
+
 
 @Component({
   imports: [],
@@ -7,7 +14,7 @@ import { Component } from '@angular/core';
   templateUrl: './produtos.html',
 })
 export class Produtos {
-produtos = [
+produtos: Produto[] = [
   {
     nome: 'Arroz 5kg',
     sku: 'ARR-001',
