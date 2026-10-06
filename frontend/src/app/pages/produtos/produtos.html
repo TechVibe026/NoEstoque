@@ -1,44 +1,69 @@
-<section class="produtos-page">
-  <header>
-    <div>
-      <h1>Produtos</h1>
-      <p>Gerencie os produtos cadastrados no estoque.</p>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <strong>noestoque</strong>
     </div>
 
-    <button type="button">
-      Novo produto
-    </button>
-  </header>
+    <nav class="sidebar-nav">
+      <a href="#">Visão geral</a>
+      <a href="#" class="active">Produtos</a>
+      <a href="#">Movimentações</a>
+      <a href="#">Conferência</a>
+      <a href="#">Aprovações</a>
+      <a href="#">Equipe</a>
+      <a href="#">Personalização</a>
+    </nav>
+  </aside>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Produto</th>
-        <th>SKU</th>
-        <th>Categoria</th>
-        <th>Estoque</th>
-        <th>Mínimo</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+  <main class="main-content">
+    <section class="produtos-page">
+      <header>
+        <div>
+          <h1>Produtos</h1>
+          <p>Gerencie os produtos cadastrados no estoque.</p>
+        </div>
 
-    <tbody>
-      @for (produto of produtos; track produto.sku) {
-        <tr>
-          <td>{{ produto.nome }}</td>
-          <td>{{ produto.sku }}</td>
-          <td>{{ produto.categoria }}</td>
-          <td>{{ produto.estoque }}</td>
-          <td>{{ produto.estoqueMinimo }}</td>
-          <td>
-  @if (produto.estoque < produto.estoqueMinimo) {
-    <span class="status status-baixo">Estoque baixo</span>
-  } @else {
-    <span class="status status-adequado">Estoque adequado</span>
-  }
-</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</section>
+        <button type="button">
+          Novo produto
+        </button>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>SKU</th>
+            <th>Categoria</th>
+            <th>Estoque</th>
+            <th>Mínimo</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (produto of produtos; track produto.sku) {
+            <tr>
+              <td>{{ produto.nome }}</td>
+              <td>{{ produto.sku }}</td>
+              <td>{{ produto.categoria }}</td>
+              <td>{{ produto.estoque }}</td>
+              <td>{{ produto.estoqueMinimo }}</td>
+
+              <td>
+                @if (produto.estoque < produto.estoqueMinimo) {
+                  <span class="status status-baixo">
+                    Estoque baixo
+                  </span>
+                } @else {
+                  <span class="status status-adequado">
+                    Estoque adequado
+                  </span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
