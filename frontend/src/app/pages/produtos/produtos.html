@@ -16,6 +16,11 @@
     <p>SKU: {{ produto.sku }}</p>
     <p>Estoque atual: {{ produto.estoque }}</p>
     <p>Estoque mínimo: {{ produto.estoqueMinimo }}</p>
+    @if (produto.estoque < produto.estoqueMinimo) {
+    <p>Estoque baixo</p>
+    } @else {
+    <p>Estoque adequado</p>
+    }
   </div>
 }
 
