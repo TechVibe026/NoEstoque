@@ -9,4 +9,14 @@
       Novo produto
     </button>
   </header>
+
+@for (produto of produtos; track produto.sku) {
+  <div class="produto">
+    <h2>{{ produto.nome }}</h2>
+    <p>SKU: {{ produto.sku }}</p>
+    <p>Estoque atual: {{ produto.estoque }}</p>
+    <p>Estoque mínimo: {{ produto.estoqueMinimo }}</p>
+  </div>
+}
+
 </section>
