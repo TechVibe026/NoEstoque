@@ -14,6 +14,7 @@
   <div class="produto">
     <h2>{{ produto.nome }}</h2>
     <p>SKU: {{ produto.sku }}</p>
+    <p>Categoria: {{ produto.categoria }}</p>
     <p>Estoque atual: {{ produto.estoque }}</p>
     <p>Estoque mínimo: {{ produto.estoqueMinimo }}</p>
     @if (produto.estoque < produto.estoqueMinimo) {

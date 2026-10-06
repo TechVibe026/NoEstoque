@@ -4,6 +4,8 @@ interface Produto {
   sku: string;
   estoque: number;
   estoqueMinimo: number;
+  categoria: string;
+
 }
 
 
@@ -18,18 +20,21 @@ produtos: Produto[] = [
   {
     nome: 'Arroz 5kg',
     sku: 'ARR-001',
+    categoria: 'Alimentos',
     estoque: 12,
     estoqueMinimo: 5,
   },
   {
     nome: 'Feijão 1kg',
     sku: 'FEI-002',
+    categoria: 'Alimentos',
     estoque: 8,
     estoqueMinimo: 10,
   },
   {
     nome: 'Café 500g',
     sku: 'CAF-003',
+    categoria: 'Bebidas',
     estoque: 20,
     estoqueMinimo: 8,
   },
