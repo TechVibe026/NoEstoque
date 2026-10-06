@@ -17,16 +17,30 @@
 
   <main class="main-content">
     <section class="produtos-page">
-      <header>
+
+      <div class="breadcrumb">
+        <span>Seu negócio</span>
+        <span>/</span>
+        <strong>Produtos</strong>
+      </div>
+
+      <header class="page-header">
         <div>
           <h1>Produtos</h1>
-          <p>Gerencie os produtos cadastrados no estoque.</p>
+          <p>Consulte saldos e registre as movimentações do dia.</p>
         </div>
+      </header>
+
+      <div class="produtos-actions">
+        <input
+          type="search"
+          placeholder="Buscar produto"
+        />
 
         <button type="button">
           Novo produto
         </button>
-      </header>
+      </div>
 
       <table>
         <thead>
