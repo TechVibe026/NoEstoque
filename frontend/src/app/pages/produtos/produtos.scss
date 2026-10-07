@@ -175,3 +175,93 @@
   background-color: #dcfce7;
   color: #166534;
 }
+
+.status-zerado {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.estado-vazio {
+  padding: 32px;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  color: #53676c;
+}
+
+.estado-vazio strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #19292c;
+}
+
+.estado-vazio p {
+  margin: 0;
+}
+
+.produto-formulario {
+  margin-bottom: 24px;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.produto-formulario-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.produto-formulario-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #19292c;
+}
+
+.produto-formulario-header p {
+  margin: 6px 0 0;
+  color: #53676c;
+  font-size: 14px;
+}
+
+.botao-fechar {
+  border: 0;
+  background: transparent;
+  color: #53676c;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.produto-formulario-campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.produto-formulario-campos label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #19292c;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.produto-formulario-campos input,
+.produto-formulario-campos select {
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #d8e0e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #19292c;
+  font-size: 14px;
+  outline: none;
+}
+
+.produto-formulario-campos input:focus,
+.produto-formulario-campos select:focus {
+  border-color: #007c80;
+}
