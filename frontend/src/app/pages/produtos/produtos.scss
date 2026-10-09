@@ -265,3 +265,14 @@
 .produto-formulario-campos select:focus {
   border-color: #007c80;
 }
+
+.mensagem-erro {
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  color: #991b1b;
+  font-size: 14px;
+  font-weight: 600;
+}

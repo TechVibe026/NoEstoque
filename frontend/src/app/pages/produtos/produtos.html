@@ -123,6 +123,12 @@
           </div>
 
           <div class="produto-formulario-acoes">
+            @if (erroFormulario) {
+              <p class="mensagem-erro">
+                {{ erroFormulario }}
+              </p>
+            }
+
             <button
               type="button"
               (click)="salvarProduto()"
@@ -140,6 +146,7 @@
             <th>Produto</th>
             <th>SKU</th>
             <th>Categoria</th>
+            <th>Unidade</th>
             <th>Estoque</th>
             <th>Mínimo</th>
             <th>Status</th>
@@ -152,6 +159,7 @@
               <td>{{ produto.nome }}</td>
               <td>{{ produto.sku }}</td>
               <td>{{ produto.categoria }}</td>
+              <td>{{ produto.unidade }}</td>
               <td>{{ produto.estoque }}</td>
               <td>{{ produto.estoqueMinimo }}</td>
 
