@@ -103,6 +103,42 @@ export class Produtos {
     );
   }
 
+// Total de produtos cadastrados, incluindo os inativos.
+get totalProdutos(): number {
+  return this.produtos.length;
+}
+
+// Produtos ativos que precisam de reposição.
+// Estoque zerado é contado separadamente.
+get totalEstoqueBaixo(): number {
+  return this.produtos.filter(
+    (produto) =>
+      produto.ativo &&
+      produto.estoque > 0 &&
+      produto.estoque <= produto.estoqueMinimo
+  ).length;
+}
+
+// Produtos ativos sem nenhuma unidade disponível.
+get totalSemEstoque(): number {
+  return this.produtos.filter(
+    (produto) => produto.ativo && produto.estoque === 0
+  ).length;
+}
+
+// Barra que compara o estoque atual com o mínimo.
+// O preenchimento fica limitado a 100%.
+nivelEstoque(produto: Produto): number {
+  if (produto.estoqueMinimo <= 0) {
+    return produto.estoque > 0 ? 100 : 0;
+  }
+
+  return Math.min(
+    100,
+    Math.max(0, (produto.estoque / produto.estoqueMinimo) * 100)
+  );
+}
+
   abrirFormulario(): void {
     this.mostrarFormulario = true;
   }

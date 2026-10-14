@@ -1,17 +1,46 @@
 <div class="app-layout">
   <aside class="sidebar">
+    <!-- Logo com ícone de caixa em SVG, sem dependências externas. -->
     <div class="sidebar-logo">
+      <span class="sidebar-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7.5 12 3l9 4.5-9 4.5L3 7.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+          <path d="M3 7.5V17l9 4 9-4V7.5M12 12v9M7.5 5.25l9 4.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+      </span>
       <strong>noestoque</strong>
     </div>
 
+    <!-- Ícones SVG adicionados sem biblioteca externa. -->
     <nav class="sidebar-nav">
-      <a href="#">Visão geral</a>
-      <a href="#" class="active">Produtos</a>
-      <a href="#">Movimentações</a>
-      <a href="#">Conferência</a>
-      <a href="#">Aprovações</a>
-      <a href="#">Equipe</a>
-      <a href="#">Personalização</a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Visão geral</span>
+      </a>
+      <a href="#" class="active">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m3 7.5 9-4.5 9 4.5-9 4.5-9-4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 7.5V17l9 4 9-4V7.5M12 12v9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>Produtos</span>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M4 7h15l-3-3M20 17H5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 7v4M5 17v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Movimentações</span>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Conferência</span>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M8 4H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="8" y="2.5" width="8" height="4" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="m8.5 13 2 2 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Aprovações</span>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM16 4.2a4 4 0 0 1 0 7.6M17 15h1.5a3.5 3.5 0 0 1 3.5 3.5V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Equipe</span>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M13 4v6M7 14v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Personalização</span>
+      </a>
     </nav>
   </aside>
 
@@ -29,6 +58,62 @@
           <p>Consulte saldos e registre as movimentações do dia.</p>
         </div>
       </header>
+
+<!-- Resumo do estoque -->
+    <section class="produtos-resumo" aria-label="Resumo do estoque">
+      <article class="resumo-card">
+        <div class="resumo-card-icon resumo-card-icon-total" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m3 7 9-4 9 4-9 4-9-4Z"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linejoin="round" />
+            <path d="M3 7v10l9 4 9-4V7M12 11v10"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="resumo-card-conteudo">
+          <p>Produtos cadastrados</p>
+          <strong>{{ totalProdutos }}</strong>
+          <span>Itens no catálogo</span>
+        </div>
+      </article>
+
+      <article class="resumo-card">
+        <div class="resumo-card-icon resumo-card-icon-baixo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3 2.8 19h18.4L12 3Z"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linejoin="round" />
+            <path d="M12 9v4m0 3h.01"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="resumo-card-conteudo">
+          <p>Estoque baixo</p>
+          <strong>{{ totalEstoqueBaixo }}</strong>
+          <span>Precisam de reposição</span>
+        </div>
+      </article>
+
+      <article class="resumo-card">
+        <div class="resumo-card-icon resumo-card-icon-zerado" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9"
+              stroke="currentColor" stroke-width="1.8" />
+            <path d="m9 9 6 6m0-6-6 6"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="resumo-card-conteudo">
+          <p>Sem estoque</p>
+          <strong>{{ totalSemEstoque }}</strong>
+          <span>Ativos sem unidades disponíveis</span>
+        </div>
+      </article>
+    </section>
 
       <div class="produtos-actions">
         <input
@@ -232,7 +317,33 @@
                 <td>{{ produto.sku }}</td>
                 <td>{{ produto.categoria }}</td>
                 <td>{{ produto.unidade }}</td>
-                <td>{{ produto.estoque }}</td>
+                <td class="coluna-estoque">
+                  <span class="estoque-valor">{{ produto.estoque }}</span>
+
+                  <div
+                    class="estoque-barra"
+                    role="progressbar"
+                    [attr.aria-label]="'Nível de estoque de ' + produto.nome"
+                    [attr.aria-valuemin]="0"
+                    [attr.aria-valuemax]="100"
+                    [attr.aria-valuenow]="nivelEstoque(produto)"
+                    [class.estoque-barra--baixo]="
+                      produto.ativo &&
+                      produto.estoque > 0 &&
+                      produto.estoque <= produto.estoqueMinimo
+                    "
+                    [class.estoque-barra--zerado]="
+                      produto.ativo && produto.estoque === 0
+                    "
+                    [class.estoque-barra--adequado]="
+                      produto.ativo &&
+                      produto.estoque > produto.estoqueMinimo
+                    "
+                    [class.estoque-barra--inativo]="!produto.ativo"
+                  >
+                    <span [style.width.%]="nivelEstoque(produto)"></span>
+                  </div>
+                </td>
                 <td>{{ produto.estoqueMinimo }}</td>
 
                 <td>
@@ -255,32 +366,35 @@
                   }
                 </td>
 
-                <td class="acoes-produto">
-                  <button
-                    type="button"
-                    class="botao-detalhes"
-                    (click)="verDetalhes(produto)"
-                  >
-                    Detalhes
-                  </button>
-
-                  <button
-                    type="button"
-                    class="botao-editar"
-                    (click)="editarProduto(produto)"
-                  >
-                    Editar
-                  </button>
-
-                  @if (produto.ativo) {
+                <td>
+                  <!-- Wrapper interno para alinhar os botões de ação. -->
+                  <div class="acoes-produto">
                     <button
                       type="button"
-                      class="botao-inativar"
-                      (click)="inativarProduto(produto)"
+                      class="botao-detalhes"
+                      (click)="verDetalhes(produto)"
                     >
-                      Inativar
+                      Detalhes
                     </button>
-                  }
+
+                    <button
+                      type="button"
+                      class="botao-editar"
+                      (click)="editarProduto(produto)"
+                    >
+                      Editar
+                    </button>
+
+                    @if (produto.ativo) {
+                      <button
+                        type="button"
+                        class="botao-inativar"
+                        (click)="inativarProduto(produto)"
+                      >
+                        Inativar
+                      </button>
+                    }
+                  </div>
                 </td>
               </tr>
             }
