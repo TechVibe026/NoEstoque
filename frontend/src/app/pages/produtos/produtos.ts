@@ -7,6 +7,7 @@ interface Produto {
   estoqueMinimo: number;
   categoria: string;
   unidade: string;
+  ativo: boolean;
 }
 
 @Component({
@@ -19,6 +20,9 @@ export class Produtos {
   termoBusca = '';
   mostrarFormulario = false;
   erroFormulario = '';
+  produtoEmEdicao: Produto | null = null;
+  mensagemPagina = '';
+  produtoSelecionado: Produto | null = null;
 
   novoProduto = {
     nome: '',
@@ -28,56 +32,62 @@ export class Produtos {
     estoqueMinimo: 0,
   };
 
-  produtos: Produto[] = [
-    {
-      nome: 'Arroz 5kg',
-      sku: 'ARR-001',
-      categoria: 'Alimentos',
-      unidade: 'UN',
-      estoque: 12,
-      estoqueMinimo: 5,
-    },
-    {
-      nome: 'Feijão 1kg',
-      sku: 'FEI-002',
-      categoria: 'Alimentos',
-      unidade: 'UN',
-      estoque: 8,
-      estoqueMinimo: 10,
-    },
-    {
-      nome: 'Café 500g',
-      sku: 'CAF-003',
-      categoria: 'Bebidas',
-      unidade: 'UN',
-      estoque: 20,
-      estoqueMinimo: 8,
-    },
-    {
-      nome: 'Açúcar 1kg',
-      sku: 'ACU-004',
-      categoria: 'Alimentos',
-      unidade: 'UN',
-      estoque: 0,
-      estoqueMinimo: 6,
-    },
-    {
-      nome: 'Óleo de soja 900ml',
-      sku: 'OLE-005',
-      categoria: 'Alimentos',
-      unidade: 'UN',
-      estoque: 5,
-      estoqueMinimo: 5,
-    },
-    {
-      nome: 'Detergente 500ml',
-      sku: 'DET-006',
-      categoria: 'Limpeza',
-      unidade: 'UN',
-      estoque: 18,
-      estoqueMinimo: 7,
-    },
-  ];
+ produtos: Produto[] = [
+  {
+    nome: 'Arroz 5kg',
+    sku: 'ARR-001',
+    categoria: 'Alimentos',
+    unidade: 'UN',
+    estoque: 12,
+    estoqueMinimo: 5,
+    ativo: true,
+  },
+  {
+    nome: 'Feijão 1kg',
+    sku: 'FEI-002',
+    categoria: 'Alimentos',
+    unidade: 'UN',
+    estoque: 8,
+    estoqueMinimo: 10,
+    ativo: true,
+  },
+  {
+    nome: 'Café 500g',
+    sku: 'CAF-003',
+    categoria: 'Bebidas',
+    unidade: 'UN',
+    estoque: 20,
+    estoqueMinimo: 8,
+    ativo: true,
+  },
+  {
+    nome: 'Açúcar 1kg',
+    sku: 'ACU-004',
+    categoria: 'Alimentos',
+    unidade: 'UN',
+    estoque: 0,
+    estoqueMinimo: 6,
+    ativo: true,
+  },
+  {
+    nome: 'Óleo de soja 900ml',
+    sku: 'OLE-005',
+    categoria: 'Alimentos',
+    unidade: 'UN',
+    estoque: 5,
+    estoqueMinimo: 5,
+    ativo: true,
+  },
+  {
+    nome: 'Detergente 500ml',
+    sku: 'DET-006',
+    categoria: 'Limpeza',
+    unidade: 'UN',
+    estoque: 18,
+    estoqueMinimo: 7,
+    ativo: true,
+  },
+];
 
   get produtosFiltrados(): Produto[] {
     const termo = this.termoBusca.toLowerCase().trim();
@@ -98,8 +108,19 @@ export class Produtos {
   }
 
   fecharFormulario(): void {
-    this.mostrarFormulario = false;
-  }
+  this.mostrarFormulario = false;
+  this.produtoEmEdicao = null;
+
+  this.novoProduto = {
+    nome: '',
+    sku: '',
+    categoria: '',
+    unidade: '',
+    estoqueMinimo: 0,
+  };
+
+  this.erroFormulario = '';
+}
 
   formatarNome(nome: string): string {
   const texto = nome.trim().toLowerCase();
@@ -109,6 +130,37 @@ export class Produtos {
   }
 
   return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+editarProduto(produto: Produto): void {
+  this.produtoEmEdicao = produto;
+
+  this.novoProduto = {
+    nome: produto.nome,
+    sku: produto.sku,
+    categoria: produto.categoria,
+    unidade: produto.unidade,
+    estoqueMinimo: produto.estoqueMinimo,
+  };
+
+  this.erroFormulario = '';
+  this.mostrarFormulario = true;
+}
+
+verDetalhes(produto: Produto): void {
+  this.produtoSelecionado = produto;
+}
+
+inativarProduto(produto: Produto): void {
+  this.mensagemPagina = '';
+
+  if (produto.estoque > 0) {
+    this.mensagemPagina =
+      'O produto precisa estar com estoque zerado para ser inativado.';
+    return;
+  }
+
+  produto.ativo = false;
 }
 
   salvarProduto(): void {
@@ -125,8 +177,9 @@ export class Produtos {
 
     const skuJaExiste = this.produtos.some(
       (produto) =>
+        produto !== this.produtoEmEdicao &&
         produto.sku.toLowerCase() ===
-        this.novoProduto.sku.trim().toLowerCase()
+          this.novoProduto.sku.trim().toLowerCase()
     );
 
     if (skuJaExiste) {
@@ -139,6 +192,20 @@ export class Produtos {
       return;
     }
 
+
+    if (this.produtoEmEdicao) {
+  this.produtoEmEdicao.nome = this.formatarNome(this.novoProduto.nome);
+  this.produtoEmEdicao.sku = this.novoProduto.sku.trim().toUpperCase();
+  this.produtoEmEdicao.categoria = this.novoProduto.categoria.trim();
+  this.produtoEmEdicao.unidade = this.novoProduto.unidade;
+  this.produtoEmEdicao.estoqueMinimo = this.novoProduto.estoqueMinimo;
+
+  this.fecharFormulario();
+
+  return;
+}
+
+
     this.produtos.push({
       nome: this.formatarNome(this.novoProduto.nome),
       sku: this.novoProduto.sku.trim().toUpperCase(),
@@ -146,6 +213,7 @@ export class Produtos {
       unidade: this.novoProduto.unidade,
       estoque: 0,
       estoqueMinimo: this.novoProduto.estoqueMinimo,
+      ativo: true,
     });
 
     this.novoProduto = {
@@ -157,6 +225,7 @@ export class Produtos {
     };
 
     this.erroFormulario = '';
+
     this.fecharFormulario();
   }
 }

@@ -46,12 +46,82 @@
         </button>
       </div>
 
+            @if (mensagemPagina) {
+        <div class="mensagem-pagina">
+          {{ mensagemPagina }}
+        </div>
+      }
+
+      @if (produtoSelecionado) {
+        <section class="produto-detalhes">
+          <div class="produto-detalhes-header">
+            <div>
+              <h2>{{ produtoSelecionado.nome }}</h2>
+              <p>Detalhes do produto cadastrado</p>
+            </div>
+
+            <button
+              type="button"
+              class="botao-fechar"
+              (click)="produtoSelecionado = null"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <div class="produto-detalhes-grid">
+            <div>
+              <span>SKU</span>
+              <strong>{{ produtoSelecionado.sku }}</strong>
+            </div>
+
+            <div>
+              <span>Categoria</span>
+              <strong>{{ produtoSelecionado.categoria || 'Não informada' }}</strong>
+            </div>
+
+            <div>
+              <span>Unidade</span>
+              <strong>{{ produtoSelecionado.unidade }}</strong>
+            </div>
+
+            <div>
+              <span>Estoque atual</span>
+              <strong>{{ produtoSelecionado.estoque }}</strong>
+            </div>
+
+            <div>
+              <span>Estoque mínimo</span>
+              <strong>{{ produtoSelecionado.estoqueMinimo }}</strong>
+            </div>
+
+            <div>
+              <span>Status</span>
+              <strong>{{ produtoSelecionado.ativo ? 'Ativo' : 'Inativo' }}</strong>
+            </div>
+          </div>
+        </section>
+      }
+
       @if (mostrarFormulario) {
         <section class="produto-formulario">
           <div class="produto-formulario-header">
             <div>
-              <h2>Novo produto</h2>
-              <p>Cadastre as informações básicas do produto.</p>
+              <h2>
+                @if (produtoEmEdicao) {
+                  Editar produto
+                } @else {
+                  Novo produto
+                }
+              </h2>
+
+              <p>
+                @if (produtoEmEdicao) {
+                  Atualize as informações do produto selecionado.
+                } @else {
+                  Cadastre as informações básicas do produto.
+                }
+              </p>
             </div>
 
             <button
@@ -140,7 +210,7 @@
         </section>
       }
 
-      <table>
+     <table>
         <thead>
           <tr>
             <th>Produto</th>
@@ -150,6 +220,7 @@
             <th>Estoque</th>
             <th>Mínimo</th>
             <th>Status</th>
+            <th>Ações</th>
           </tr>
         </thead>
 
@@ -164,7 +235,11 @@
               <td>{{ produto.estoqueMinimo }}</td>
 
               <td>
-                @if (produto.estoque === 0) {
+                @if (!produto.ativo) {
+                  <span class="status status-inativo">
+                    Inativo
+                  </span>
+                } @else if (produto.estoque === 0) {
                   <span class="status status-zerado">
                     Sem estoque
                   </span>
@@ -176,6 +251,34 @@
                   <span class="status status-adequado">
                     Estoque adequado
                   </span>
+                }
+              </td>
+
+              <td class="acoes-produto">
+                <button
+                  type="button"
+                  class="botao-detalhes"
+                  (click)="verDetalhes(produto)"
+                >
+                  Detalhes
+                </button>
+
+                <button
+                  type="button"
+                  class="botao-editar"
+                  (click)="editarProduto(produto)"
+                >
+                  Editar
+                </button>
+
+                @if (produto.ativo) {
+                  <button
+                    type="button"
+                    class="botao-inativar"
+                    (click)="inativarProduto(produto)"
+                  >
+                    Inativar
+                  </button>
                 }
               </td>
             </tr>
