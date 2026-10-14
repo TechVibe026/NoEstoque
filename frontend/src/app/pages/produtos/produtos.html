@@ -34,6 +34,7 @@
         <input
           type="search"
           placeholder="Buscar produto"
+          aria-label="Buscar produto"
           [value]="termoBusca"
           (input)="termoBusca = $any($event.target).value"
         />
@@ -46,12 +47,82 @@
         </button>
       </div>
 
+      @if (mensagemPagina) {
+        <div class="mensagem-pagina" role="status">
+          {{ mensagemPagina }}
+        </div>
+      }
+
+      @if (produtoSelecionado) {
+        <section class="produto-detalhes">
+          <div class="produto-detalhes-header">
+            <div>
+              <h2>{{ produtoSelecionado.nome }}</h2>
+              <p>Detalhes do produto cadastrado</p>
+            </div>
+
+            <button
+              type="button"
+              class="botao-fechar"
+              (click)="produtoSelecionado = null"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <div class="produto-detalhes-grid">
+            <div>
+              <span>SKU</span>
+              <strong>{{ produtoSelecionado.sku }}</strong>
+            </div>
+
+            <div>
+              <span>Categoria</span>
+              <strong>{{ produtoSelecionado.categoria || 'Não informada' }}</strong>
+            </div>
+
+            <div>
+              <span>Unidade</span>
+              <strong>{{ produtoSelecionado.unidade }}</strong>
+            </div>
+
+            <div>
+              <span>Estoque atual</span>
+              <strong>{{ produtoSelecionado.estoque }}</strong>
+            </div>
+
+            <div>
+              <span>Estoque mínimo</span>
+              <strong>{{ produtoSelecionado.estoqueMinimo }}</strong>
+            </div>
+
+            <div>
+              <span>Status</span>
+              <strong>{{ produtoSelecionado.ativo ? 'Ativo' : 'Inativo' }}</strong>
+            </div>
+          </div>
+        </section>
+      }
+
       @if (mostrarFormulario) {
         <section class="produto-formulario">
           <div class="produto-formulario-header">
             <div>
-              <h2>Novo produto</h2>
-              <p>Cadastre as informações básicas do produto.</p>
+              <h2>
+                @if (produtoEmEdicao) {
+                  Editar produto
+                } @else {
+                  Novo produto
+                }
+              </h2>
+
+              <p>
+                @if (produtoEmEdicao) {
+                  Atualize as informações do produto selecionado.
+                } @else {
+                  Cadastre as informações básicas do produto.
+                }
+              </p>
             </div>
 
             <button
@@ -123,6 +194,12 @@
           </div>
 
           <div class="produto-formulario-acoes">
+            @if (erroFormulario) {
+              <p class="mensagem-erro" role="alert">
+                {{ erroFormulario }}
+              </p>
+            }
+
             <button
               type="button"
               (click)="salvarProduto()"
@@ -130,50 +207,86 @@
               Salvar produto
             </button>
           </div>
-
         </section>
       }
 
-      <table>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>SKU</th>
-            <th>Categoria</th>
-            <th>Estoque</th>
-            <th>Mínimo</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (produto of produtosFiltrados; track produto.sku) {
+      <div class="tabela-produtos-container">
+        <table>
+          <thead>
             <tr>
-              <td>{{ produto.nome }}</td>
-              <td>{{ produto.sku }}</td>
-              <td>{{ produto.categoria }}</td>
-              <td>{{ produto.estoque }}</td>
-              <td>{{ produto.estoqueMinimo }}</td>
-
-              <td>
-                @if (produto.estoque === 0) {
-                  <span class="status status-zerado">
-                    Sem estoque
-                  </span>
-                } @else if (produto.estoque <= produto.estoqueMinimo) {
-                  <span class="status status-baixo">
-                    Estoque baixo
-                  </span>
-                } @else {
-                  <span class="status status-adequado">
-                    Estoque adequado
-                  </span>
-                }
-              </td>
+              <th>Produto</th>
+              <th>SKU</th>
+              <th>Categoria</th>
+              <th>Unidade</th>
+              <th>Estoque</th>
+              <th>Mínimo</th>
+              <th>Status</th>
+              <th>Ações</th>
             </tr>
-          }
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            @for (produto of produtosFiltrados; track produto.sku) {
+              <tr>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.sku }}</td>
+                <td>{{ produto.categoria }}</td>
+                <td>{{ produto.unidade }}</td>
+                <td>{{ produto.estoque }}</td>
+                <td>{{ produto.estoqueMinimo }}</td>
+
+                <td>
+                  @if (!produto.ativo) {
+                    <span class="status status-inativo">
+                      Inativo
+                    </span>
+                  } @else if (produto.estoque === 0) {
+                    <span class="status status-zerado">
+                      Sem estoque
+                    </span>
+                  } @else if (produto.estoque <= produto.estoqueMinimo) {
+                    <span class="status status-baixo">
+                      Estoque baixo
+                    </span>
+                  } @else {
+                    <span class="status status-adequado">
+                      Estoque adequado
+                    </span>
+                  }
+                </td>
+
+                <td class="acoes-produto">
+                  <button
+                    type="button"
+                    class="botao-detalhes"
+                    (click)="verDetalhes(produto)"
+                  >
+                    Detalhes
+                  </button>
+
+                  <button
+                    type="button"
+                    class="botao-editar"
+                    (click)="editarProduto(produto)"
+                  >
+                    Editar
+                  </button>
+
+                  @if (produto.ativo) {
+                    <button
+                      type="button"
+                      class="botao-inativar"
+                      (click)="inativarProduto(produto)"
+                    >
+                      Inativar
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
       @if (produtosFiltrados.length === 0) {
         <div class="estado-vazio">
