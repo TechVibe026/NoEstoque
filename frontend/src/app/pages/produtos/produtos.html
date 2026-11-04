@@ -228,7 +228,7 @@
                 type="number"
                 min="0"
                 [value]="novoProduto.estoqueMinimo"
-                (input)="novoProduto.estoqueMinimo = +$any($event.target).value"
+                (input)="novoProduto.estoqueMinimo = $any($event.target).valueAsNumber"
               />
             </label>
           </div>

@@ -227,17 +227,16 @@ inativarProduto(produto: Produto): void {
   produto.ativo = false;
 }
 
-  salvarProduto(): void {
-    this.erroFormulario = '';
-
-    if (
-      !this.novoProduto.nome.trim() ||
-      !this.novoProduto.sku.trim() ||
-      !this.novoProduto.unidade
-    ) {
-      this.erroFormulario = 'Preencha nome, SKU e unidade antes de salvar.';
-      return;
-    }
+    salvarProduto(): void {
+      this.erroFormulario = '';
+      if (
+        !this.novoProduto.nome.trim() ||
+        !this.novoProduto.sku.trim() ||
+        !this.novoProduto.unidade
+      ) {
+        this.erroFormulario = 'Preencha nome, SKU e unidade antes de salvar.';
+        return;
+      }
 
     const skuJaExiste = this.produtos.some(
       (produto) =>
@@ -248,6 +247,11 @@ inativarProduto(produto: Produto): void {
 
     if (skuJaExiste) {
       this.erroFormulario = 'Já existe um produto cadastrado com esse SKU.';
+      return;
+    }
+
+        if (!Number.isFinite(this.novoProduto.estoqueMinimo)) {
+      this.erroFormulario = 'Informe um estoque mínimo válido.';
       return;
     }
 
