@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, ViewChild } from '@angular/core';
 
 interface Produto {
   nome: string;
@@ -211,9 +211,16 @@ editarProduto(produto: Produto): void {
   this.mostrarFormulario = true;
 }
 
-verDetalhes(produto: Produto): void {
-  this.produtoSelecionado = produto;
-}
+  @ViewChild('tituloDetalhes')
+  private tituloDetalhes?: ElementRef<HTMLHeadingElement>;
+
+  private readonly detector = inject(ChangeDetectorRef);
+
+  verDetalhes(produto: Produto): void {
+    this.produtoSelecionado = produto;
+    this.detector.detectChanges();
+    this.tituloDetalhes?.nativeElement.focus();
+  }
 
 inativarProduto(produto: Produto): void {
   this.mensagemPagina = '';
