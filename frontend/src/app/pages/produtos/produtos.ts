@@ -89,18 +89,44 @@ export class Produtos {
   },
 ];
 
+  filtroStatus: 'todos' | 'adequado' | 'baixo' | 'zerado' | 'inativo' = 'todos';
+
   get produtosFiltrados(): Produto[] {
     const termo = this.termoBusca.toLowerCase().trim();
 
-    if (!termo) {
-      return this.produtos;
-    }
-
-    return this.produtos.filter(
-      (produto) =>
+    return this.produtos.filter((produto) => {
+      const correspondeBusca =
         produto.nome.toLowerCase().includes(termo) ||
-        produto.sku.toLowerCase().includes(termo)
-    );
+        produto.sku.toLowerCase().includes(termo);
+
+      if (!correspondeBusca) {
+        return false;
+      }
+
+      switch (this.filtroStatus) {
+        case 'todos':
+          return true;
+
+        case 'adequado':
+          return produto.ativo && produto.estoque > produto.estoqueMinimo;
+
+        case 'baixo':
+          return (
+            produto.ativo &&
+            produto.estoque > 0 &&
+            produto.estoque <= produto.estoqueMinimo
+          );
+
+        case 'zerado':
+          return produto.ativo && produto.estoque === 0;
+
+        case 'inativo':
+          return !produto.ativo;
+
+        default:
+          return false;
+      }
+    });
   }
 
 // Total de produtos cadastrados, incluindo os inativos.

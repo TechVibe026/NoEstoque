@@ -57,7 +57,7 @@
         </article>
       </section>
 
-      <div class="produtos-actions">
+            <div class="produtos-actions">
         <input
           type="search"
           placeholder="Buscar produto"
@@ -65,6 +65,18 @@
           [value]="termoBusca"
           (input)="termoBusca = $any($event.target).value"
         />
+
+        <select
+          aria-label="Filtrar produtos por situação"
+          [value]="filtroStatus"
+          (change)="filtroStatus = $any($event.target).value"
+        >
+          <option value="todos">Todos os produtos</option>
+          <option value="adequado">Estoque adequado</option>
+          <option value="baixo">Estoque baixo</option>
+          <option value="zerado">Sem estoque</option>
+          <option value="inativo">Inativos</option>
+        </select>
 
         <button type="button" (click)="abrirFormulario()">
           Novo produto

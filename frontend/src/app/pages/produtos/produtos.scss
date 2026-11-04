@@ -271,10 +271,9 @@
   margin-bottom: var(--space-5);
 }
 
-.produtos-actions input {
-  flex: 1 1 460px;
-  width: 100%;
-  max-width: 460px;
+.produtos-actions input,
+.produtos-actions select {
+  box-sizing: border-box;
   min-width: 0;
   height: 44px;
   padding: 0 14px;
@@ -284,6 +283,35 @@
   color: var(--color-text);
   font: inherit;
   font-size: 13px;
+}
+
+.produtos-actions input {
+  flex: 1 1 460px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.produtos-actions select {
+  flex: 0 1 210px;
+  width: 210px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.produtos-actions select:hover {
+  border-color: #a7c5c2;
+}
+
+.produtos-actions select:focus {
+  border-color: var(--color-teal);
+  box-shadow: var(--shadow-focus);
+}
+
+@media (max-width: 768px) {
+  .produtos-actions select {
+    flex: 0 1 auto;
+    width: 100%;
+  }
 }
 
 .produtos-actions input::placeholder,
