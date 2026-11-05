@@ -1,4 +1,3 @@
-
 import { Component, signal } from '@angular/core';
 import {
   RouterLink,
@@ -14,4 +13,18 @@ import {
 })
 export class App {
   protected readonly title = signal('NoEstoque');
+  protected readonly menuAberto = signal(false);
+
+  protected alternarMenu(): void {
+    this.menuAberto.update((aberto) => !aberto);
+  }
+
+  protected fecharMenu(botaoMenu?: HTMLButtonElement): void {
+    if (!this.menuAberto()) {
+      return;
+    }
+
+    this.menuAberto.set(false);
+    botaoMenu?.focus();
+  }
 }
