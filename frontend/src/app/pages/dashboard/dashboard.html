@@ -1,0 +1,111 @@
+
+<section class="dashboard-page">
+  <header class="dashboard-header">
+    <div>
+      <p class="dashboard-eyebrow">Painel de controle</p>
+      <h1>Visão geral</h1>
+      <p class="dashboard-description">
+        Acompanhe a situação do estoque e identifique o que precisa de atenção.
+      </p>
+    </div>
+
+    <span class="dashboard-demo">Dados de demonstração</span>
+  </header>
+
+  <section class="dashboard-indicadores" aria-label="Indicadores do estoque">
+    <article class="indicador">
+      <span class="indicador-label">Produtos cadastrados</span>
+      <strong class="indicador-valor">{{ totalProdutos }}</strong>
+      <span class="indicador-detalhe">Total no catálogo demonstrativo</span>
+    </article>
+
+    <article class="indicador">
+      <span class="indicador-label">Estoque baixo</span>
+      <strong class="indicador-valor indicador-alerta">
+        {{ totalEstoqueBaixo }}
+      </strong>
+      <span class="indicador-detalhe">Produtos abaixo do mínimo</span>
+    </article>
+
+    <article class="indicador">
+      <span class="indicador-label">Sem estoque</span>
+      <strong class="indicador-valor indicador-critico">
+        {{ totalSemEstoque }}
+      </strong>
+      <span class="indicador-detalhe">Produtos com saldo zerado</span>
+    </article>
+  </section>
+
+  <section class="dashboard-secoes" aria-label="Informações do estoque">
+    <article class="dashboard-painel painel-criticos">
+      <div class="painel-header">
+        <div>
+          <h2>Produtos que precisam de atenção</h2>
+          <p>Itens com estoque baixo ou zerado.</p>
+        </div>
+        <span class="painel-contagem">{{ produtosCriticos.length }} itens</span>
+      </div>
+
+      @if (produtosCriticos.length > 0) {
+        <ul class="lista-criticos">
+          @for (produto of produtosCriticos; track produto.sku) {
+            <li>
+              <div class="critico-identidade">
+                <strong>{{ produto.nome }}</strong>
+                <span>{{ produto.sku }}</span>
+              </div>
+
+              <div class="critico-saldo">
+                <strong>{{ produto.estoque }}</strong>
+                <span>Mín. {{ produto.estoqueMinimo }}</span>
+              </div>
+
+              <span
+                class="critico-status"
+                [class.critico-status-zerado]="produto.estoque === 0"
+              >
+                {{ produto.estoque === 0 ? 'Zerado' : 'Baixo' }}
+              </span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="painel-vazio">Nenhum produto crítico no momento.</p>
+      }
+    </article>
+
+    <article class="dashboard-painel">
+      <div class="painel-header">
+        <div>
+          <h2>Movimentações recentes</h2>
+          <p>Últimas entradas e saídas registradas.</p>
+        </div>
+      </div>
+
+      <div class="painel-vazio">
+        <strong>Nenhuma movimentação disponível</strong>
+        <p>
+          O histórico aparecerá aqui quando o módulo de movimentações
+          estiver integrado.
+        </p>
+      </div>
+    </article>
+
+    <article class="dashboard-painel">
+      <div class="painel-header">
+        <div>
+          <h2>Produtos com mais saídas</h2>
+          <p>Ranking de produtos por quantidade movimentada.</p>
+        </div>
+      </div>
+
+      <div class="painel-vazio">
+        <strong>Ranking ainda indisponível</strong>
+        <p>
+          Precisamos de um histórico de saídas para calcular esse indicador.
+        </p>
+      </div>
+    </article>
+  </section>
+</section>
+
