@@ -391,7 +391,7 @@
 }
 
 .tabela-produtos-container tbody tr:has(.status-inativo) .col-produto .produto-nome {
-  color: #849092;
+  color: var(--color-inactive);
 }
 
 .acoes-produto {
